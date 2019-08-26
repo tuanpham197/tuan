@@ -4,6 +4,8 @@ import Header from './components/Header';
 import SideBar from './components/SideBar';
 import Slide from './components/Slide';
 import Product from './components/Product';
+import Footer from './components/Footer';
+import Cart from './components/Cart';
 
 class  App extends Component {
     constructor(props) {
@@ -11,6 +13,7 @@ class  App extends Component {
         this.state= {
             listDT : [
                 {
+                    id : 1,
                     name  : 'RedMi Note 5 Pro',
                     price : 700,
                     desc : 'Điện thoại Trung Quốc',
@@ -19,6 +22,7 @@ class  App extends Component {
                     category : 'xiaomi'
                 },
                 {
+                    id : 2,
                     name  : 'Iphone 6s',
                     price : 900,
                     desc : 'Điện thoại',
@@ -27,6 +31,7 @@ class  App extends Component {
                     category : 'iphone'
                 },
                 {
+                    id : 3,
                     name  : 'Samsung Galaxy s9',
                     price : 400,
                     desc : 'Điện thoại',
@@ -35,6 +40,7 @@ class  App extends Component {
                     category : 'samsung'
                 },
                 {
+                    id : 4,
                     name  : 'Iphone XsMax',
                     price : 600,
                     desc : 'Điện thoại',
@@ -80,8 +86,44 @@ class  App extends Component {
             });
         }
     }
+    addToCart = (id)=>{
+        var arrProduct = this.state.listDT;
+        var item =  arrProduct.find(element=>{
+            return element.id === parseInt(id);
+        });
+        var cart = this.state.cart;
+        var tmp = cart.find(element=>{
+            return element.id === parseInt(id);
+        });
+        if(this.state.cart.length === 0){
+            
+            item.quatity = 1;
+            cart.push(item);
+            this.setState({
+                cart : cart
+            })  
+        }
+        else{    
+            if(tmp){
+                cart.forEach(element=>{
+                    if(element===tmp){                  
+                        element.quatity = element.quatity+1;
+                    }            
+                })
+                this.setState({
+                    cart
+                })
+            }
+            else{
+                item.quatity = 1;
+                cart.push(item);
+                this.setState({
+                    cart : cart
+                });  
+            }
+        }  
+    }
     render(){
-        console.log(this.state.result);
         
         return (
             <div id="wrapper">
@@ -100,7 +142,8 @@ class  App extends Component {
                         <div className="col-lg-9">
                             <Slide imageSlide = {this.state.imgSlide}/>
                             <Product 
-                                product = {this.state.result.length > 0 ?this.state.result :this.state.listDT} 
+                                product = {this.state.result.length > 0 ?this.state.result :this.state.listDT}
+                                addToCart = {this.addToCart} 
                             />
                             {/* /.row */}
                         </div>
@@ -110,99 +153,11 @@ class  App extends Component {
                 </div>
                 {/* /.container */}
                 {/* Footer */}
-                <div className="container mb-4">
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="table-responsive">
-                                <div className="card text-white bg-primary">
-                                  <img className="card-img-top" src="holder.js/100px180/" alt=""/>
-                                  <div className="card-body">
-                                    <h4 className="card-title">Giỏ hàng</h4>
-                                  </div>
-                                </div>
-                                <table className="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"> </th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Available</th>
-                                            <th scope="col" className="text-center">Quantity</th>
-                                            <th scope="col" className="text-right">Price</th>
-                                            <th> </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                                            <td>Product Name Dada</td>
-                                            <td>In stock</td>
-                                            <td><input className="form-control" type="text" value="1" /></td>
-                                            <td className="text-right">124,90 €</td>
-                                            <td className="text-right"><button className="btn btn-sm btn-danger"><i className="fa fa-trash"></i> </button> </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                                            <td>Product Name Toto</td>
-                                            <td>In stock</td>
-                                            <td><input className="form-control" type="text" value="1" /></td>
-                                            <td className="text-right">33,90 €</td>
-                                            <td className="text-right"><button className="btn btn-sm btn-danger"><i className="fa fa-trash"></i> </button> </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                                            <td>Product Name Titi</td>
-                                            <td>In stock</td>
-                                            <td><input className="form-control" type="text" value="1" /></td>
-                                            <td className="text-right">70,00 €</td>
-                                            <td className="text-right"><button className="btn btn-sm btn-danger"><i className="fa fa-trash"></i> </button> </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>Sub-Total</td>
-                                            <td className="text-right">255,90 €</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>Shipping</td>
-                                            <td className="text-right">6,90 €</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><strong>Total</strong></td>
-                                            <td className="text-right"><strong>346,90 €</strong></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="col mb-2">
-                            <div className="row">
-                                <div className="col-sm-12  col-md-6">
-                                    <button className="btn btn-block btn-light">Continue Shopping</button>
-                                </div>
-                                <div className="col-sm-12 col-md-6 text-right">
-                                    <button className="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Cart 
+                    cart = {this.state.cart}
+                    />
 
-                <footer className="py-5 bg-dark">
-                    <div className="container">
-                    <p className="m-0 text-center text-white">Copyright © Your Website 2019</p>
-                    </div>
-                    {/* /.container */}
-                </footer>
+                <Footer />
             </div>
         );
     }

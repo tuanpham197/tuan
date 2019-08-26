@@ -7,9 +7,12 @@ export default class ProductItem extends Component {
                 return index < numStar ? element='★' : '☆';
             });
     }
+    onClick = (event)=>{
+        this.props.addToCart(event.target.id);
+    }
     render() {
-        var {name,price,desc,image,star} = this.props;
-
+        var {id,name,price,desc,image,star} = this.props;
+        
         return (
             <div className="col-lg-4 col-md-6 mb-4">
                 <div className="card h-100">
@@ -24,7 +27,7 @@ export default class ProductItem extends Component {
                     <div className="card-footer">
                         <small className="text-muted">{this.showStar(star)}</small>
                         <div className="add-cart">
-                            <button type="button" className="btn btn-primary">Add to cart</button>
+                            <button type="button" id={id} className="btn btn-primary" onClick={this.onClick}>Add to cart</button>
                         </div>
                     </div>
                 </div>

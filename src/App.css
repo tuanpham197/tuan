@@ -22,6 +22,9 @@
 .App-link {
   color: #61dafb;
 }
+img.w-60{
+  width: 60px;
+}
 /*
 ** Style Simple Ecommerce Theme for Bootstrap 4
 ** Created by T-PHP https://t-php.fr/43-theme-ecommerce-bootstrap-4.html

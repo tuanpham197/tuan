@@ -3,14 +3,16 @@ import ProductItem from './ProductItem';
 
 export default class Product extends Component {
     loadDataItem = (arrProduct)=>{
-        return arrProduct.map((element,index)=>{
+        return arrProduct.map((element,index)=>{         
             return <ProductItem 
                         key ={index}
+                        id = {element.id}
                         name={element.name}
                         desc = {element.desc}
                         price = {element.price}
                         image = {element.image}
                         star = {element.star}
+                        addToCart = {this.props.addToCart}
                     />
         })
     }
