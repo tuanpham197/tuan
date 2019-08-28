@@ -11,14 +11,21 @@ export default class Cart extends Component {
                     quatity = {element.quatity}
                     image = {element.image}
                     price = {element.price}
+                    onUpdateQuatity = {this.props.onUpdateQuatity}
+                    deleteItem = {this.props.deleteItem}
             >
 
             </CartItem>
         })
     }
-    
+    totalCart = ()=>{
+        var total=0;
+        this.props.cart.forEach(element => {
+            total += element.quatity*element.price;
+        });
+        return total;
+    }
     render() {
-        console.log(this.showCart());
         
         return (
             <div className="container mb-4">
@@ -49,24 +56,8 @@ export default class Cart extends Component {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Sub-Total</td>
-                                        <td className="text-right">255,90 €</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Shipping</td>
-                                        <td className="text-right">6,90 €</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
                                         <td><strong>Total</strong></td>
-                                        <td className="text-right"><strong>346,90 €</strong></td>
+                                        <td className="text-right"><strong>{this.totalCart()} €</strong></td>
                                     </tr>
                                 </tbody>
                             </table>

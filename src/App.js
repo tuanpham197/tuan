@@ -107,7 +107,7 @@ class  App extends Component {
             if(tmp){
                 cart.forEach(element=>{
                     if(element===tmp){                  
-                        element.quatity = element.quatity+1;
+                        element.quatity = parseInt(element.quatity)+1;
                     }            
                 })
                 this.setState({
@@ -122,6 +122,24 @@ class  App extends Component {
                 });  
             }
         }  
+    }
+    updateQuatity = (id,quatity)=>{
+        var {cart} = this.state;
+        cart.forEach(element=>{
+            if(element.id === id){
+                element.quatity = +quatity
+            }
+        });
+        this.setState({
+            cart
+        })
+    }
+    deleteItemCart = (id)=>{
+        var {cart} = this.state;
+        
+        this.setState({
+            cart : cart.filter(e => e.id !== id)
+        });
     }
     render(){
         
@@ -155,6 +173,8 @@ class  App extends Component {
                 {/* Footer */}
                 <Cart 
                     cart = {this.state.cart}
+                    onUpdateQuatity = {this.updateQuatity}
+                    deleteItem = {this.deleteItemCart}
                     />
 
                 <Footer />
