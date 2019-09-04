@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import './App.css';
-import {BrowserRouter as Router,Route} from 'react-router-dom';
 import Header from './components/Header';
 import SideBar from './components/SideBar';
 import Slide from './components/Slide';
@@ -8,6 +7,9 @@ import Product from './components/Product';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
 import Success from './components/Success';
+import about from './components/about';
+import contact from './components/contact';
+import {BrowserRouter as Router,Route} from "react-router-dom";
 
 class  App extends Component {
     constructor(props) {
@@ -194,43 +196,48 @@ class  App extends Component {
     render(){
         var {isShowSuccess,status,content} = this.state;
         return (
-            <div id="wrapper">
-                {/* Navigation */}
-                <Header />
-                {isShowSuccess === true ? <Success status ={status} content={content}></Success> : ''}
-                {/* Page Content */}
-                <div className="container">
-                    <div className="row">
-                        <SideBar 
-                            category ={this.state.category}
-                            showProductByCategory = {this.showProductByCategory}
-                        />
-                        {/* /.col-lg-3 */}
-    
-                        {/* /.col-lg-9 */}
-                        <div className="col-lg-9">
-                            <Slide imageSlide = {this.state.imgSlide}/>
-                            <Product 
-                                product = {this.state.result.length > 0 ?this.state.result :this.state.listDT}
-                                addToCart = {this.addToCart} 
+            <Router>
+                <div id="wrapper">
+                    {/* Navigation */}
+                    <Header />
+                    {isShowSuccess === true ? <Success status ={status} content={content}></Success> : ''}
+                    {/* Page Content */}
+                    {/* Hien thi thong tin thay doi tai day */}
+                    <Route path="/about" component={about}></Route>
+                    <Route path="/contact" component={contact}></Route>
+                    <div className="container">
+                        <div className="row">
+                            <SideBar 
+                                category ={this.state.category}
+                                showProductByCategory = {this.showProductByCategory}
                             />
-                            {/* /.row */}
+                            {/* /.col-lg-3 */}
+        
+                            {/* /.col-lg-9 */}
+                            <div className="col-lg-9">
+                                <Slide imageSlide = {this.state.imgSlide}/>
+                                <Product 
+                                    product = {this.state.result.length > 0 ?this.state.result :this.state.listDT}
+                                    addToCart = {this.addToCart} 
+                                />
+                                {/* /.row */}
+                            </div>
+                        {/* /.col-lg-9 */}
                         </div>
-                    {/* /.col-lg-9 */}
+                        {/* /.row */}
                     </div>
-                    {/* /.row */}
-                </div>
-                {/* /.container */}
-                {/* Footer */}
-                <Cart 
-                    cart = {this.state.cart}
-                    onUpdateQuatity = {this.updateQuatity}
-                    deleteItem = {this.deleteItemCart}
-                    checkoutCart = {this.checkoutCart}
-                    />
+                    {/* /.container */}
+                    {/* Footer */}
+                    <Cart 
+                        cart = {this.state.cart}
+                        onUpdateQuatity = {this.updateQuatity}
+                        deleteItem = {this.deleteItemCart}
+                        checkoutCart = {this.checkoutCart}
+                        />
 
-                <Footer />
-            </div>
+                    <Footer />
+                </div>
+            </Router>   
         );
     }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class ProductItem extends Component {
     showStar = (numStar)=>{       
-        var arr = ['☆','☆','☆','☆','☆']
+        var arr = ['☆','☆','☆','☆','☆'];
         return arr.map((element,index)=>{
                 return index < numStar ? element='★' : '☆';
             });
