@@ -1,11 +1,13 @@
 import React,{Component} from 'react';
 import './App.css';
+import {BrowserRouter as Router,Route} from 'react-router-dom';
 import Header from './components/Header';
 import SideBar from './components/SideBar';
 import Slide from './components/Slide';
 import Product from './components/Product';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import Success from './components/Success';
 
 class  App extends Component {
     constructor(props) {
@@ -69,7 +71,10 @@ class  App extends Component {
                 }
             ],
             cart : [],
-            result : []
+            result : [],
+            isShowSuccess : false,
+            status : '',
+            content : ''
         }
     }
     showProductByCategory = (id)=>{
@@ -87,6 +92,7 @@ class  App extends Component {
         }
     }
     addToCart = (id)=>{
+        var  t= 1;
         var arrProduct = this.state.listDT;
         var item =  arrProduct.find(element=>{
             return element.id === parseInt(id);
@@ -98,30 +104,52 @@ class  App extends Component {
         if(this.state.cart.length === 0){
             
             item.quatity = 1;
-            cart.push(item);
+            cart.push(item);          
+            t=1;
             this.setState({
-                cart : cart
+                cart : cart,
+                isShowSuccess : true,
+                status : 'alert alert-success',
+                content : 'Thêm thành công.'
             })  
+            
         }
         else{    
             if(tmp){
+                t = 1;
                 cart.forEach(element=>{
                     if(element===tmp){                  
                         element.quatity = parseInt(element.quatity)+1;
                     }            
                 })
                 this.setState({
-                    cart
+                    cart,
+                    isShowSuccess : true,
+                    status : 'alert alert-success',
+                    content : 'Thêm thành công.'
+
                 })
             }
             else{
-                item.quatity = 1;
+                item.quatity = 1;t=1;
                 cart.push(item);
                 this.setState({
-                    cart : cart
+                    cart : cart,
+                    isShowSuccess : true,
+                    status : 'alert alert-success',
+                    content : 'Thêm thành công.'
                 });  
             }
         }  
+        if(t===1){
+            t=0;    
+            setTimeout(()=>{
+                this.setState({
+                    isShowSuccess : false,
+                })
+            },3000);
+        }
+        
     }
     updateQuatity = (id,quatity)=>{
         var {cart} = this.state;
@@ -138,15 +166,38 @@ class  App extends Component {
         var {cart} = this.state;
         
         this.setState({
-            cart : cart.filter(e => e.id !== id)
+            cart : cart.filter(e => e.id !== id),
+            isShowSuccess : true,
+            status : 'alert alert-danger',
+            content : 'Xóa thành công.'
         });
+        setTimeout(()=>{
+            this.setState({
+                isShowSuccess : false
+            })
+        },3000);
+    }
+    checkoutCart = ()=>{
+        this.setState({
+            cart : [],
+            isShowSuccess : true,
+            status : 'alert alert-success',
+            content : 'Checkout Thành công'
+        });
+        setTimeout(()=>{
+            this.setState({
+                isShowSuccess:false
+            })
+        },2000);
+        
     }
     render(){
-        
+        var {isShowSuccess,status,content} = this.state;
         return (
             <div id="wrapper">
                 {/* Navigation */}
                 <Header />
+                {isShowSuccess === true ? <Success status ={status} content={content}></Success> : ''}
                 {/* Page Content */}
                 <div className="container">
                     <div className="row">
@@ -175,6 +226,7 @@ class  App extends Component {
                     cart = {this.state.cart}
                     onUpdateQuatity = {this.updateQuatity}
                     deleteItem = {this.deleteItemCart}
+                    checkoutCart = {this.checkoutCart}
                     />
 
                 <Footer />

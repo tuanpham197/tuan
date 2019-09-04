@@ -25,6 +25,10 @@ export default class Cart extends Component {
         });
         return total;
     }
+    checkOut = ()=>{
+        this.props.checkoutCart();
+        
+    }
     render() {
         
         return (
@@ -69,7 +73,7 @@ export default class Cart extends Component {
                                 <button className="btn btn-block btn-light">Continue Shopping</button>
                             </div>
                             <div className="col-sm-12 col-md-6 text-right">
-                                <button className="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
+                                <button className="btn btn-lg btn-block btn-success text-uppercase" onClick={()=>this.checkOut()}>Checkout</button>
                             </div>
                         </div>
                     </div>

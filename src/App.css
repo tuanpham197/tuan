@@ -25,6 +25,11 @@
 img.w-60{
   width: 60px;
 }
+.alert{
+  position: fixed;
+  right: 0;
+  z-index: 999;
+}
 /*
 ** Style Simple Ecommerce Theme for Bootstrap 4
 ** Created by T-PHP https://t-php.fr/43-theme-ecommerce-bootstrap-4.html
