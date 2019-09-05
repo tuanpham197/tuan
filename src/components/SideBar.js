@@ -26,6 +26,13 @@ export default class SideBar extends Component {
             <div className="col-lg-3">
                 <h1 className="my-4">Shop Name</h1>
                 <div className="list-group">
+                    <a href="/" 
+                        className="list-group-item"
+                        id="" 
+                        onClick={this.onClick}
+                    >
+                        Trang chủ
+                    </a>
                     {this.showCategory(category)}
                 </div>
             </div>

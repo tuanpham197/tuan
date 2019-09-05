@@ -92,6 +92,8 @@ class  App extends Component {
                 result : result
             });
         }
+        console.log(result);
+        
     }
     addToCart = (id)=>{
         var  t= 1;
