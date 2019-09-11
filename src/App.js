@@ -76,10 +76,13 @@ class  App extends Component {
             result : [],
             isShowSuccess : false,
             status : '',
-            content : ''
+            content : '',
+            fill :''
         }
     }
     showProductByCategory = (id)=>{
+        //console.log(id + "a");
+        
         var arrProuct = this.state.listDT;
         var  result = [];       
         arrProuct.forEach(element => {
@@ -89,10 +92,16 @@ class  App extends Component {
         });
         if(result.length>0){
             this.setState({
-                result : result
+                result : result,
+                fill : id
+            });
+        }else{
+            this.setState({
+                result : this.state.listDT,
+                fill : id
             });
         }
-        console.log(result);
+        //console.log(result);
         
     }
     addToCart = (id)=>{
@@ -212,6 +221,7 @@ class  App extends Component {
                             <SideBar 
                                 category ={this.state.category}
                                 showProductByCategory = {this.showProductByCategory}
+                                fill = {this.state.fill}
                             />
                             {/* /.col-lg-3 */}
         
