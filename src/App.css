@@ -90,7 +90,10 @@ footer {
 footer a {
   color: #f8f9fa!important
 }
-
+.fa-shopping-cart{
+  color: #fff;
+  font-size: 19px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -7,9 +7,10 @@ import Product from './components/Product';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
 import Success from './components/Success';
-import about from './components/about';
-import contact from './components/contact';
-import {BrowserRouter as Router,Route} from "react-router-dom";
+import { BrowserRouter as Router, Route,Switch  } from 'react-router-dom';
+
+import routes from './router';
+
 
 class  App extends Component {
     constructor(props) {
@@ -72,7 +73,7 @@ class  App extends Component {
                     name : 'SamSung'
                 }
             ],
-            cart : [],
+            cart : localStorage.getItem('cart') !== '' ? JSON.parse(localStorage.getItem('cart')): [],
             result : [],
             isShowSuccess : false,
             status : '',
@@ -162,7 +163,7 @@ class  App extends Component {
                 })
             },3000);
         }
-        
+        localStorage.setItem('cart',JSON.stringify(this.state.cart));
     }
     updateQuatity = (id,quatity)=>{
         var {cart} = this.state;
@@ -174,6 +175,7 @@ class  App extends Component {
         this.setState({
             cart
         })
+        localStorage.setItem('cart',JSON.stringify(this.state.cart));
     }
     deleteItemCart = (id)=>{
         var {cart} = this.state;
@@ -188,21 +190,30 @@ class  App extends Component {
             this.setState({
                 isShowSuccess : false
             })
-        },3000);
+        },3000);       
+        localStorage.setItem('cart',JSON.stringify(cart.filter(e => e.id !== id)));
     }
     checkoutCart = ()=>{
-        this.setState({
-            cart : [],
-            isShowSuccess : true,
-            status : 'alert alert-success',
-            content : 'Checkout Thành công'
-        });
-        setTimeout(()=>{
+        if(this.state.cart.length > 0){
             this.setState({
-                isShowSuccess:false
-            })
-        },2000);
+                cart : [],
+                isShowSuccess : true,
+                status : 'alert alert-success',
+                content : 'Checkout Thành công'
+            });
+            setTimeout(()=>{
+                this.setState({
+                    isShowSuccess:false
+                })
+            },2000);
+            localStorage.setItem('cart',"");
+        }
         
+    }
+    showRoutes = (routes) =>{
+        return routes.map((item,index)=>{
+            return <Route key={index} path={item.path} exact={item.exact} component={item.main}></Route>
+        });
     }
     render(){
         var {isShowSuccess,status,content} = this.state;
@@ -210,12 +221,12 @@ class  App extends Component {
             <Router>
                 <div id="wrapper">
                     {/* Navigation */}
-                    <Header />
+                    <Header totalCart = {this.state.cart.length} />
                     {isShowSuccess === true ? <Success status ={status} content={content}></Success> : ''}
                     {/* Page Content */}
                     {/* Hien thi thong tin thay doi tai day */}
-                    <Route path="/about" component={about}></Route>
-                    <Route path="/contact" component={contact}></Route>
+                    
+                    
                     <div className="container">
                         <div className="row">
                             <SideBar 
@@ -228,10 +239,15 @@ class  App extends Component {
                             {/* /.col-lg-9 */}
                             <div className="col-lg-9">
                                 <Slide imageSlide = {this.state.imgSlide}/>
-                                <Product 
-                                    product = {this.state.result.length > 0 ?this.state.result :this.state.listDT}
-                                    addToCart = {this.addToCart} 
-                                />
+                                <Switch>
+                                    <Route path="/" exact component={()=><Product 
+                                        product = {this.state.result.length > 0 ?this.state.result :this.state.listDT}
+                                        addToCart = {this.addToCart} 
+                                    />}/>
+                                    <Route path="/cart" component={()=><Cart cart = {this.state.cart} onUpdateQuatity = {this.updateQuatity} deleteItem = {this.deleteItemCart} checkoutCart = {this.checkoutCart}/>} />
+                                    {this.showRoutes(routes)}
+                                </Switch>
+                                
                                 {/* /.row */}
                             </div>
                         {/* /.col-lg-9 */}
@@ -240,12 +256,7 @@ class  App extends Component {
                     </div>
                     {/* /.container */}
                     {/* Footer */}
-                    <Cart 
-                        cart = {this.state.cart}
-                        onUpdateQuatity = {this.updateQuatity}
-                        deleteItem = {this.deleteItemCart}
-                        checkoutCart = {this.checkoutCart}
-                        />
+                    
 
                     <Footer />
                 </div>
