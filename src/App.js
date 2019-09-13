@@ -73,7 +73,7 @@ class  App extends Component {
                     name : 'SamSung'
                 }
             ],
-            cart : localStorage.getItem('cart') !== '' ? JSON.parse(localStorage.getItem('cart')): [],
+            cart : localStorage.getItem('cart') === null ? [] : JSON.parse(localStorage.getItem('cart')),
             result : [],
             isShowSuccess : false,
             status : '',
@@ -217,6 +217,9 @@ class  App extends Component {
     }
     render(){
         var {isShowSuccess,status,content} = this.state;
+        console.log(this.state.cart);
+        console.log(localStorage.getItem('cart'));
+        
         return (
             <Router>
                 <div id="wrapper">
