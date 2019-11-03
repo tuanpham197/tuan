@@ -10,9 +10,10 @@ import Success from './components/Success';
 import { BrowserRouter as Router, Route,Switch  } from 'react-router-dom';
 
 import routes from './router';
+import Detail from './components/Detail';
 
 
-class  App extends Component {
+class App extends Component {
     constructor(props) {
         super(props);
         this.state= {
@@ -46,6 +47,42 @@ class  App extends Component {
                 },
                 {
                     id : 4,
+                    name  : 'Iphone XsMax',
+                    price : 600,
+                    desc : 'Điện thoại',
+                    image : 'https://cdn.tgdd.vn/Products/Images/42/197570/huawei-y7-pro-2019-do-400x400.jpg',
+                    star : 4,
+                    category : 'iphone'
+                },
+                {
+                    id : 5,
+                    name  : 'RedMi Note 5 Pro',
+                    price : 700,
+                    desc : 'Điện thoại Trung Quốc',
+                    image : 'https://cdn.tgdd.vn/Products/Images/42/202703/oppo-f11-pro-128gb-1-400x400.jpg',
+                    star : 4,
+                    category : 'xiaomi'
+                },
+                {
+                    id : 6,
+                    name  : 'Iphone 6s',
+                    price : 900,
+                    desc : 'Điện thoại',
+                    image : 'https://cdn.tgdd.vn/Products/Images/42/78124/iphone-7-plus-32gb-gold-400x400.jpg',
+                    star : 2,
+                    category : 'iphone'
+                },
+                {
+                    id : 7,
+                    name  : 'Samsung Galaxy s9',
+                    price : 400,
+                    desc : 'Điện thoại',
+                    image : 'https://cdn.tgdd.vn/Products/Images/42/192003/samsung-galaxy-a9-2018-blue-400x400.jpg',
+                    star : 5,
+                    category : 'samsung'
+                },
+                {
+                    id : 8,
                     name  : 'Iphone XsMax',
                     price : 600,
                     desc : 'Điện thoại',
@@ -222,48 +259,50 @@ class  App extends Component {
         
         return (
             <Router>
-                <div id="wrapper">
-                    {/* Navigation */}
-                    <Header totalCart = {this.state.cart.length} />
-                    {isShowSuccess === true ? <Success status ={status} content={content}></Success> : ''}
-                    {/* Page Content */}
-                    {/* Hien thi thong tin thay doi tai day */}
-                    
-                    
-                    <div className="container">
-                        <div className="row">
-                            <SideBar 
-                                category ={this.state.category}
-                                showProductByCategory = {this.showProductByCategory}
-                                fill = {this.state.fill}
-                            />
-                            {/* /.col-lg-3 */}
-        
-                            {/* /.col-lg-9 */}
-                            <div className="col-lg-9">
-                                <Slide imageSlide = {this.state.imgSlide}/>
-                                <Switch>
-                                    <Route path="/" exact component={()=><Product 
-                                        product = {this.state.result.length > 0 ?this.state.result :this.state.listDT}
-                                        addToCart = {this.addToCart} 
-                                    />}/>
-                                    <Route path="/cart" component={()=><Cart cart = {this.state.cart} onUpdateQuatity = {this.updateQuatity} deleteItem = {this.deleteItemCart} checkoutCart = {this.checkoutCart}/>} />
-                                    {this.showRoutes(routes)}
-                                </Switch>
-                                
-                                {/* /.row */}
-                            </div>
-                        {/* /.col-lg-9 */}
-                        </div>
-                        {/* /.row */}
-                    </div>
-                    {/* /.container */}
-                    {/* Footer */}
-                    
+             <div id="wrapper">
+             {/* Navigation */}
+             <Header totalCart = {this.state.cart.length} />
+             {isShowSuccess === true ? <Success status ={status} content={content}></Success> : ''}
+             {/* Page Content */}
+             {/* Hien thi thong tin thay doi tai day */}
+             
+             
+             <div className="container">
+                 <div className="row">
+                     <SideBar 
+                         category ={this.state.category}
+                         showProductByCategory = {this.showProductByCategory}
+                         fill = {this.state.fill}
+                     />
+                     {/* /.col-lg-3 */}
+ 
+                     {/* /.col-lg-9 */}
+                     <div className="col-lg-9">
+                         <Slide imageSlide = {this.state.imgSlide}/>
+                         <Switch>
+                             <Route path="/" exact component={()=><Product 
+                                 product = {this.state.result.length > 0 ?this.state.result :this.state.listDT}
+                                 addToCart = {this.addToCart} 
+                             />}/>
+                             <Route path="/detail/:id" component={(props)=><Detail {...props} product = {this.state.listDT} />} />
+                             <Route path="/cart" component={()=><Cart cart = {this.state.cart} onUpdateQuatity = {this.updateQuatity} deleteItem = {this.deleteItemCart} checkoutCart = {this.checkoutCart}/>} />
+                             {this.showRoutes(routes)}
+                             
+                         </Switch>
+                         
+                         {/* /.row */}
+                     </div>
+                 {/* /.col-lg-9 */}
+                 </div>
+                 {/* /.row */}
+             </div>
+             {/* /.container */}
+             {/* Footer */}
+             
 
-                    <Footer />
-                </div>
-            </Router>   
+             <Footer />
+         </div>
+     </Router>  
         );
     }
 }

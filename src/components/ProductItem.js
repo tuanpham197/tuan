@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Link,NavLink} from 'react-router-dom';
 export default class ProductItem extends Component {
     showStar = (numStar)=>{       
         var arr = ['☆','☆','☆','☆','☆'];
@@ -19,7 +19,7 @@ export default class ProductItem extends Component {
                     <a href="/"><img className="card-img-top" src={image} alt="" /></a>
                     <div className="card-body">
                         <h4 className="card-title">
-                        <a href="/">{name}</a>
+                        <Link to={"/detail/"+id} className="nav-link" >{name}</Link>
                         </h4>
                         <h5>{price}</h5>
                         <p className="card-text">{desc}</p>

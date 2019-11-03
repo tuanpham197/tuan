@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ProductItem from './ProductItem';
+import { BrowserRouter as Router, Route,Switch  } from 'react-router-dom';
+import Detail from './Detail';
 
 export default class Product extends Component {
     loadDataItem = (arrProduct)=>{
@@ -19,9 +21,11 @@ export default class Product extends Component {
     render() {
         var {product} = this.props;
         return (
-            <div className="row">
-                {this.loadDataItem(product)}
-            </div>
+            <div>
+                 <div className="row">
+                    {this.loadDataItem(product)}
+                </div>
+            </div>    
         )
     }
 }
